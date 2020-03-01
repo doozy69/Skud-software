@@ -1,0 +1,254 @@
+unit Unit2;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Data.DB, Vcl.Grids,
+  Vcl.DBGrids, IBX.IBCustomDataSet, IBX.IBQuery, IBX.IBDatabase, IdCoder,
+  IdCoder3to4, IdCoderMIME, Vcl.StdCtrls, IdMessage, IdBaseComponent,
+  IdComponent, IdTCPConnection, IdTCPClient, IdExplicitTLSClientServerBase,
+  IdMessageClient, IdSMTPBase, IdSMTP, IniFiles;
+
+type
+  TForm2 = class(TForm)
+    IBDatabase1: TIBDatabase;
+    IBTransaction1: TIBTransaction;
+    IBQuery1: TIBQuery;
+    DataSource1: TDataSource;
+    IdSMTP1: TIdSMTP;
+    IdMessage1: TIdMessage;
+    Timer1: TTimer;
+    IBTransaction2: TIBTransaction;
+    IBQuery2: TIBQuery;
+    DBGrid2: TDBGrid;
+    DataSource2: TDataSource;
+    DataSource3: TDataSource;
+    IBQuery3: TIBQuery;
+    IBTransaction3: TIBTransaction;
+    cballUser: TComboBox;
+    DataSource4: TDataSource;
+    IBQuery4: TIBQuery;
+    IBTransaction4: TIBTransaction;
+    btnAddUser: TButton;
+    labUSRID: TLabel;
+    IBQuery2USR_DZ: TLargeintField;
+    IBQuery2DT_DZ: TDateTimeField;
+    IBQuery2fio: TStringField;
+    IBQuery5: TIBQuery;
+    IBQuery6: TIBQuery;
+    btnDeleteUser: TButton;
+    labUSR_DZ: TLabel;
+    IBTransaction5: TIBTransaction;
+    IBTransaction6: TIBTransaction;
+    Memo1: TMemo;
+    procedure Timer1Timer(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure cballUserChange(Sender: TObject);
+    procedure btnAddUserClick(Sender: TObject);
+    procedure DBGrid2CellClick(Column: TColumn);
+    procedure btnDeleteUserClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form2: TForm2; KeyList: TStringList;
+implementation
+
+{$R *.dfm}
+
+procedure TForm2.btnAddUserClick(Sender: TObject);
+begin
+  IBTransaction4.Active:=false;
+  IBQuery4.SQL.Clear;
+  IBQuery4.SQL.Text:='select count(*) from FB_DZ where USR_DZ = :USR_DZ';
+  IBQuery4.Params[0].Value:=labUSRID.Caption;
+
+  IBQuery4.Open;
+
+  if IBQuery4.Fields[0].AsString = '0' then
+  begin
+    IBTransaction4.Active:=false;
+    IBQuery4.SQL.Clear;
+    IBQuery4.SQL.Text:='insert into FB_DZ values (:ID, null)';
+    IBQuery4.Params[0].Value:=labUSRID.Caption;
+
+    IBTransaction4.StartTransaction;
+    IBQuery4.ExecSQL;
+    IBTransaction4.Commit;
+    IBTransaction4.Active:=false;
+
+    IBQuery2.Active:=false;
+    IBQuery2.Active:=true;
+  end
+  else
+  ShowMessage('Такой работник уже добавлен.');
+end;
+
+procedure TForm2.btnDeleteUserClick(Sender: TObject);
+begin
+  IBTransaction4.Active:=false;
+  IBQuery4.SQL.Text:='delete from FB_DZ where USR_DZ = :USR_DZ';
+  IBQuery4.Params[0].Value:=labUSR_DZ.Caption;
+  IBTransaction4.StartTransaction;
+  IBQuery4.ExecSQL;
+  IBTransaction4.Commit;
+  IBTransaction4.Active:=false;
+
+  IBTransaction2.Active:=false;
+  IBQuery2.SQL.Clear;
+  IBQuery2.SQL.Text:='SELECT * FROM FB_DZ';
+
+  IBTransaction2.StartTransaction;
+  IBQuery2.Open;
+  IBTransaction2.Commit;
+  IBTransaction2.Active:=false;
+
+  IBQuery2.Active:=false;
+  IBQuery2.Active:=true;
+  labUSR_DZ.Caption:='';
+end;
+
+procedure TForm2.cballUserChange(Sender: TObject);
+begin
+
+  IBQuery4.SQL.Clear;
+  IBQuery4.SQL.Text:='SELECT ID FROM FB_USR where FIO = :fio';
+  IBQuery4.Params[0].Value:=cballUser.Text;
+  IBQuery4.Open;
+  labUSRID.Caption:= IBQuery4.Fields[0].AsString;
+  if labUSRID.Caption <> '' then btnAddUser.Enabled:=true else btnAddUser.Enabled:=false;
+end;
+
+procedure TForm2.DBGrid2CellClick(Column: TColumn);
+begin
+  labUSR_DZ.Caption:=IBQuery2.FieldByName('USR_DZ').AsString;
+  if labUSR_DZ.Caption <> '' then btnDeleteUser.Enabled:=true else btnDeleteUser.Enabled:=false;
+  //DateTimePicker3.DateTime:=dm.DataModule2.IBQuery1.FieldByName('DT').AsDateTime;
+end;
+
+procedure TForm2.FormShow(Sender: TObject);
+var FIniFile: TIniFile;
+str: String;
+KeyList: TStringList;
+i: Integer;
+begin
+  try
+    FIniFile:= TIniFile.Create(ExtractFilePath(Application.ExeName) + 'Config.ini');
+    KeyList:=TStringList.Create;
+    FIniFile := TINIFile.Create(ExtractFilePath(Application.ExeName) + 'Config.ini');
+    FIniFile.ReadSectionValues('Email',KeyList);
+    for i := 0 to KeyList.Count-1 do
+    begin
+      KeyList[i]:=(Copy(KeyList[i],Pos('=',KeyList[i])+1,KeyList[i].Length));
+      ShowMessage(KeyList[i]);
+    end;
+    try
+      str :=  FIniFile.ReadString('Base', 'Path', '');
+      IBDatabase1.DatabaseName := str;
+      //ShowMessage(str);
+    finally
+      FIniFile.Free;
+    end;
+    IBDatabase1.Connected := true;
+    IBQuery1.Active:=true;
+    IBQuery2.Active:=true;
+    IBQuery3.Active:=true;
+    except
+     on E:Exception do
+     begin
+        ShowMessage('Error connect DB file =(');
+        Halt;
+     end;
+
+end;
+  cballUser.Items.Clear;
+  IBQuery4.SQL.Clear;
+  IBQuery4.SQL.Text:='SELECT FIO FROM FB_USR';
+  IBQuery4.Open;
+  while not IBQuery4.Eof do
+      begin
+        cballUser.Items.Add(IBQuery4.Fields[0].AsString);
+        IBQuery4.Next;
+      end;
+end;
+
+procedure TForm2.Timer1Timer(Sender: TObject);
+var s:String;
+s2: String;
+begin
+  s:='Error'; s2:='Error2';
+  IBTransaction4.Active:=false;
+  IBQuery4.SQL.Text:='SELECT * FROM FB_DZ';
+  IBQuery4.Open;
+  while not IBQuery4.Eof do
+  begin
+    IBQuery5.SQL.Clear;
+    IBQuery5.SQL.Text:='select first 1 * from FB_EVN where USR = :USR and dt > current_date order by DT desc';
+    IBQuery5.Params[0].Value:=IBQuery4.Fields[0].AsString;
+    IBQuery5.Open;
+    if not (IBQuery5.Eof) and ((IBQuery5.FieldByName('EVN').AsString='3') or (IBQuery5.FieldByName('EVN').AsString='5')) then
+    begin
+
+      IBQuery1.SQL.Clear;
+      IBQuery1.SQL.Text:='select first 1 * from FB_USR where ID = :ID';
+      IBQuery1.Params[0].Value:=IBQuery4.Fields[0].AsString;
+      IBQuery1.Open;
+
+      if (IBQuery5.FieldByName('DT').AsString <> IBQuery4.Fields[1].AsString) then //если записи разные то
+      begin
+        IBTransaction6.Active:=false;
+        IBQuery6.SQL.Clear;
+        IBQuery6.SQL.Text:='update FB_DZ set DT_DZ = :DT where USR_DZ = :USR_DZ';
+        IBQuery6.Params[0].Value:=IBQuery5.FieldByName('DT').AsString;
+        IBQuery6.Params[1].Value:=IBQuery4.FieldByName('USR_DZ').AsString;
+
+        IBTransaction6.StartTransaction;
+        IBQuery6.ExecSQL;
+        IBTransaction6.Commit;
+        IBTransaction6.Active:=false;
+
+        if IBQuery5.FieldByName('EVN').AsString='3' then
+        s:='Приход'
+        else if IBQuery5.FieldByName('EVN').AsString='5' then
+        s:='Уход';
+
+        if IBQuery5.FieldByName('DVS').AsString = '000B3A0039CC' then
+        s2:='Офис 22_2 '
+        else if IBQuery5.FieldByName('DVS').AsString = '000B3A0039CA' then
+        s2:='Офис 26 '
+        else if IBQuery5.FieldByName('DVS').AsString = '000B3A0039CE' then
+        s2:='Офис 22 ';
+
+        IdMessage1.CharSet:='UTF-8';
+        IdMessage1.Recipients.EMailAddresses:='a.gromov@mosrealstroy.ru,mikhail@mosrealstroy.ru';
+        IdMessage1.From.Address:='a.gromov@mosrealstroy.ru';
+        IdMessage1.From.Name:=IBQuery1.FieldByName('LNAME').AsString;
+        IdMessage1.Subject:=IBQuery5.FieldByName('DT').AsString+' '+s2+s;
+        IdMessage1.ContentType:='text/plain; charset="UTF-8"';
+
+        IdMessage1.Body.Text:=IBQuery1.FieldByName('FIO').AsString+' '+IBQuery5.FieldByName('DT').AsString+' '+s2+s;
+
+        IdMessage1.Date:=Now;
+
+        IdSMTP1.Connect;
+        if IdSMTP1.Connected then IdSMTP1.Send(IdMessage1) else ShowMessage('lose');
+        IdSMTP1.Disconnect();
+
+        IBQuery2.Active:=false;
+        IBQuery2.Active:=true;
+        Memo1.Lines.Add(IBQuery1.FieldByName('FIO').AsString+' '+IBQuery5.FieldByName('DT').AsString+' '+s2+s);
+      end;
+    end;
+    IBQuery4.Next;
+  end;
+end;
+
+
+
+end.
+
+

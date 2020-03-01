@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.678,=C:\Users\a.gromov\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.721,C:\Users\a.gromov\Documents\Embarcadero\Studio\Projects\Unit2.pas=C:\Users\a.gromov\Desktop\skud_email\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.886,C:\Users\a.gromov\Desktop\skud_email\DEMAIL.dproj=C:\Users\a.gromov\Desktop\skud_email\Project2.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.721,C:\Users\a.gromov\Documents\Embarcadero\Studio\Projects\Unit2.dfm=C:\Users\a.gromov\Desktop\skud_email\Unit2.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.122,C:\Users\a.gromov\Documents\Embarcadero\Studio\Projects\Project2.dproj=C:\Users\a.gromov\Desktop\skud_email\Project2.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.393,C:\Users\a.gromov\Desktop\skud_email\DMAIL.dproj=C:\Users\a.gromov\Desktop\skud_email\DEMAIL.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

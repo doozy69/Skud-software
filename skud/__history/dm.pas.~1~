@@ -1,0 +1,44 @@
+unit dm;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, Data.DB, IBX.IBDatabase, IBX.IBCustomDataSet,
+  IBX.IBQuery;
+
+type
+  TDataModule2 = class(TDataModule)
+    IBTransaction2: TIBTransaction;
+    DataSource2: TDataSource;
+    IBQuery2: TIBQuery;
+    DataSource1: TDataSource;
+    IBTransaction1: TIBTransaction;
+    IBQuery1: TIBQuery;
+    IBQuery1ID: TLargeintField;
+    IBQuery1DT: TDateTimeField;
+    IBQuery1DVS: TIBStringField;
+    IBQuery1EVN: TSmallintField;
+    IBQuery1EVNH: TSmallintField;
+    IBQuery1UID: TIBStringField;
+    IBQuery1IDH: TLargeintField;
+    IBQuery1USR: TLargeintField;
+    IBQuery1EKEY: TLargeintField;
+    IBQuery1EKEYH: TIBStringField;
+    IBQuery1test: TStringField;
+    IBDatabase1: TIBDatabase;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  DataModule2: TDataModule2;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+end.

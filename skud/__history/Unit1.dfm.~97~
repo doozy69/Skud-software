@@ -1,0 +1,260 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'doozy editor'
+  ClientHeight = 577
+  ClientWidth = 913
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnCreate = FormCreate
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object DBGrid1: TDBGrid
+    Left = 0
+    Top = 0
+    Width = 913
+    Height = 329
+    DataSource = DataModule2.DataSource1
+    TabOrder = 0
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    OnCellClick = DBGrid1CellClick
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'ID'
+        Width = 60
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'fio'
+        Width = 200
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'USR'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'DT'
+        Width = 116
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'DVS'
+        Width = 100
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'EVN'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'UID'
+        Width = 100
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'EKEY'
+        Width = 64
+        Visible = True
+      end>
+  end
+  object PageControl1: TPageControl
+    Left = 0
+    Top = 335
+    Width = 913
+    Height = 242
+    ActivePage = TabSheet1
+    TabOrder = 1
+    object insert: TTabSheet
+      Caption = #1044#1086#1073#1072#1074#1080#1090#1100
+      OnShow = insertShow
+      object Panel1: TPanel
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 899
+        Height = 208
+        Align = alBottom
+        BiDiMode = bdLeftToRight
+        Color = clWhite
+        Ctl3D = True
+        ParentBiDiMode = False
+        ParentBackground = False
+        ParentCtl3D = False
+        TabOrder = 0
+        object Label1: TLabel
+          Left = 437
+          Top = 33
+          Width = 78
+          Height = 13
+          Caption = '0000000000000'
+        end
+        object Label2: TLabel
+          Left = 537
+          Top = 33
+          Width = 42
+          Height = 13
+          Caption = '0000000'
+        end
+        object Label3: TLabel
+          Left = 596
+          Top = 33
+          Width = 72
+          Height = 13
+          Caption = '000000000000'
+        end
+        object Label5: TLabel
+          Left = 689
+          Top = 33
+          Width = 96
+          Height = 13
+          Caption = '0000000000000000'
+        end
+        object Label4: TLabel
+          Left = 437
+          Top = 89
+          Width = 78
+          Height = 13
+          Caption = '0000000000000'
+          Color = clWhite
+          ParentColor = False
+        end
+        object CheckBox1: TCheckBox
+          Left = 25
+          Top = 134
+          Width = 57
+          Height = 17
+          Caption = #1059#1093#1086#1076
+          TabOrder = 0
+          OnClick = CheckBox1Click
+        end
+        object btnSend: TButton
+          Left = 25
+          Top = 149
+          Width = 75
+          Height = 25
+          Caption = #1054#1090#1087#1088#1072#1074#1080#1090#1100
+          TabOrder = 1
+          OnClick = btnSendClick
+        end
+        object ComboBox2: TComboBox
+          Left = 25
+          Top = 83
+          Width = 378
+          Height = 21
+          TabOrder = 2
+          Text = #1054#1092#1080#1089
+          OnChange = ComboBox2Change
+        end
+        object ComboBox1: TComboBox
+          Left = 25
+          Top = 29
+          Width = 378
+          Height = 21
+          TabOrder = 3
+          Text = #1060#1048#1054
+          OnChange = ComboBox1Change
+        end
+        object MaskEdit1: TMaskEdit
+          Left = 25
+          Top = 56
+          Width = 116
+          Height = 21
+          EditMask = '!99.99.99 99:99:99'
+          MaxLength = 17
+          TabOrder = 4
+          Text = '  .  .     :  :  '
+        end
+      end
+    end
+    object TabSheet1: TTabSheet
+      Caption = #1056#1077#1076#1072#1082#1090#1080#1088#1086#1074#1072#1090#1100'\'#1059#1076#1072#1083#1080#1090#1100
+      ImageIndex = 1
+      OnShow = TabSheet1Show
+      object Label6: TLabel
+        Left = 344
+        Top = 32
+        Width = 78
+        Height = 13
+        Caption = '0000000000000'
+      end
+      object Label7: TLabel
+        Left = 770
+        Top = 21
+        Width = 6
+        Height = 24
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -20
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object ComboBox3: TComboBox
+        Left = 24
+        Top = 24
+        Width = 290
+        Height = 21
+        TabOrder = 0
+        Text = #1060#1048#1054
+        OnChange = ComboBox3Change
+      end
+      object DateTimePicker2: TDateTimePicker
+        Left = 24
+        Top = 51
+        Width = 186
+        Height = 21
+        Date = 43661.692238541670000000
+        Time = 43661.692238541670000000
+        TabOrder = 1
+        OnChange = ComboBox3Change
+      end
+      object Button2: TButton
+        Left = 815
+        Top = 78
+        Width = 75
+        Height = 25
+        Caption = #1048#1079#1084#1077#1085#1080#1090#1100
+        TabOrder = 2
+        OnClick = Button2Click
+      end
+      object Button3: TButton
+        Left = 24
+        Top = 186
+        Width = 75
+        Height = 25
+        Caption = #1059#1076#1072#1083#1080#1090#1100
+        TabOrder = 3
+        OnClick = Button3Click
+      end
+      object MaskEdit2: TMaskEdit
+        Left = 770
+        Top = 51
+        Width = 120
+        Height = 21
+        EditMask = '!99.99.99 99:99:99'
+        MaxLength = 17
+        TabOrder = 4
+        Text = '  .  .     :  :  '
+      end
+    end
+  end
+end

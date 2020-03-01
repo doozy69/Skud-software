@@ -1,0 +1,147 @@
+object DataModule2: TDataModule2
+  OldCreateOrder = False
+  Height = 364
+  Width = 540
+  object IBTransaction2: TIBTransaction
+    Active = True
+    DefaultDatabase = IBDatabase1
+    Params.Strings = (
+      'read_committed'
+      'rec_version'
+      'nowait')
+    Left = 128
+    Top = 28
+  end
+  object DataSource2: TDataSource
+    DataSet = IBQuery2
+    Left = 272
+    Top = 28
+  end
+  object IBQuery2: TIBQuery
+    Database = IBDatabase1
+    Transaction = IBTransaction2
+    Active = True
+    BufferChunks = 1000
+    CachedUpdates = False
+    DataSource = DataSource1
+    ParamCheck = True
+    SQL.Strings = (
+      'select * from FB_USR')
+    Left = 200
+    Top = 28
+  end
+  object DataSource1: TDataSource
+    DataSet = IBQuery1
+    Left = 272
+    Top = 100
+  end
+  object IBTransaction1: TIBTransaction
+    Active = True
+    DefaultDatabase = IBDatabase1
+    Params.Strings = (
+      'read_committed'
+      'rec_version'
+      'nowait')
+    Left = 120
+    Top = 100
+  end
+  object IBQuery1: TIBQuery
+    Database = IBDatabase1
+    Transaction = IBTransaction1
+    Active = True
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'select * from FB_EVN order by DT desc')
+    Left = 200
+    Top = 100
+    object IBQuery1ID: TLargeintField
+      FieldName = 'ID'
+      Origin = '"FB_EVN"."ID"'
+    end
+    object IBQuery1DT: TDateTimeField
+      FieldName = 'DT'
+      Origin = '"FB_EVN"."DT"'
+    end
+    object IBQuery1DVS: TIBStringField
+      FieldName = 'DVS'
+      Origin = '"FB_EVN"."DVS"'
+      Size = 12
+    end
+    object IBQuery1EVN: TSmallintField
+      FieldName = 'EVN'
+      Origin = '"FB_EVN"."EVN"'
+    end
+    object IBQuery1EVNH: TSmallintField
+      FieldName = 'EVNH'
+      Origin = '"FB_EVN"."EVNH"'
+    end
+    object IBQuery1UID: TIBStringField
+      FieldName = 'UID'
+      Origin = '"FB_EVN"."UID"'
+      Size = 255
+    end
+    object IBQuery1IDH: TLargeintField
+      FieldName = 'IDH'
+      Origin = '"FB_EVN"."IDH"'
+    end
+    object IBQuery1USR: TLargeintField
+      FieldName = 'USR'
+      Origin = '"FB_EVN"."USR"'
+    end
+    object IBQuery1EKEY: TLargeintField
+      FieldName = 'EKEY'
+      Origin = '"FB_EVN"."EKEY"'
+    end
+    object IBQuery1EKEYH: TIBStringField
+      FieldName = 'EKEYH'
+      Origin = '"FB_EVN"."EKEYH"'
+      Size = 16
+    end
+    object IBQuery1fio: TStringField
+      FieldKind = fkLookup
+      FieldName = 'fio'
+      LookupDataSet = IBQuery2
+      LookupKeyFields = 'ID'
+      LookupResultField = 'FIO'
+      KeyFields = 'USR'
+      Size = 200
+      Lookup = True
+    end
+  end
+  object IBDatabase1: TIBDatabase
+    Connected = True
+    DatabaseName = 'C:\Users\a.gromov\Desktop\DB\CBASE.FDB'
+    Params.Strings = (
+      'user_name=sysdba'
+      'password=masterkey')
+    LoginPrompt = False
+    ServerType = 'IBServer'
+    Left = 40
+    Top = 28
+  end
+  object IBQuery3: TIBQuery
+    Database = IBDatabase1
+    Transaction = IBTransaction3
+    Active = True
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'SELECT FIO FROM FB_USR')
+    Left = 200
+    Top = 240
+  end
+  object IBTransaction3: TIBTransaction
+    Active = True
+    DefaultDatabase = IBDatabase1
+    Left = 120
+    Top = 240
+  end
+  object DataSource3: TDataSource
+    DataSet = IBQuery3
+    Left = 280
+    Top = 248
+  end
+end
